@@ -28,27 +28,52 @@ class App extends Component {
     this.props.createContact(contact);
   };
 
+  deleteContact = (e, index) => {
+    e.preventDefault();
+    this.props.deleteContact(index);
+  };
+
+  listView(data, index) {
+    return (
+      <div className="row">
+        <div className="col-mid-10">
+          <li key={index} className="list-group-item ">
+            {data.name}
+          </li>
+        </div>
+        <div className="col-mid-2">
+          <button
+            onClick={(e) => this.deleteContact(e, index)}
+            className="btn btn-danger"
+          >
+            Delete{" "}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
-      <div>
-        <h1>Clientside Contacts Application</h1>
+      <div className="container">
+        <h1>Contacts Application</h1>
         <hr />
-        <ul>
-          {this.props.contacts.map((contact, i) => (
-            <li key={i}>{contact.name}</li>
-          ))}
+
+        <h3>Add Contact Form</h3>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            onChange={this.handleChange}
+            className="form-control"
+            value={this.state.name}
+          />
+          <br />
+          <input type="submit" className="btn btn-success" value="ADD" />
+        </form>
+        <hr />
+        <ul className="list-group">
+          {this.props.contacts.map((contact, i) => this.listView(contact, i))}
         </ul>
-        <div>
-          <h3>Add Contact Form</h3>
-          <form onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              onChange={this.handleChange}
-              value={this.state.name}
-            />
-            <input type="submit" />
-          </form>
-        </div>
       </div>
     );
   }
@@ -62,6 +87,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createContact: (contact) => dispatch(contactAction.createContact(contact)),
+    deleteContact: (id) => dispatch(contactAction.deleteContact(id)),
   };
 };
 
