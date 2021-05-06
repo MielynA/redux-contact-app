@@ -36,15 +36,16 @@ class App extends Component {
   listView(data, index) {
     return (
       <div className="row">
-        <div className="col-mid-10">
+        <div className="col-mid-8 mt-4">
           <li key={index} className="list-group-item ">
             {data.name}
           </li>
         </div>
-        <div className="col-mid-2">
+        <div className="col-mid-4 ">
           <button
             onClick={(e) => this.deleteContact(e, index)}
-            className="btn btn-danger"
+            className="btn btn-danger mt-2"
+            //style="padding: 5px;"
           >
             Delete{" "}
           </button>
@@ -59,13 +60,14 @@ class App extends Component {
         <h1>Contacts Application</h1>
         <hr />
 
-        <h3>Add Contact Form</h3>
+        <h3>Add Name</h3>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
             onChange={this.handleChange}
             className="form-control"
             value={this.state.name}
+            onSubmit={this.handleSubmit}
           />
           <br />
           <input type="submit" className="btn btn-success" value="ADD" />
