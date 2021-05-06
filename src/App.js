@@ -1,25 +1,68 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as contactAction from "./actions/contactAction";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: "",
+    };
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      name: e.target.value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    let contact = {
+      name: this.state.name,
+    };
+    this.setState({
+      name: "",
+    });
+    this.props.createContact(contact);
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>Clientside Contacts Application</h1>
+        <hr />
+        <ul>
+          {this.props.contacts.map((contact, i) => (
+            <li key={i}>{contact.name}</li>
+          ))}
+        </ul>
+        <div>
+          <h3>Add Contact Form</h3>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              onChange={this.handleChange}
+              value={this.state.name}
+            />
+            <input type="submit" />
+          </form>
+        </div>
+      </div>
+    );
+  }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    contacts: state.contacts,
+  };
+};
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createContact: (contact) => dispatch(contactAction.createContact(contact)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
