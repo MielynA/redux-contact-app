@@ -45,7 +45,6 @@ class App extends Component {
           <button
             onClick={(e) => this.deleteContact(e, index)}
             className="btn btn-danger mt-2"
-            //style="padding: 5px;"
           >
             Delete{" "}
           </button>
@@ -56,26 +55,27 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>Contacts Application</h1>
-        <hr />
-
-        <h3>Add Name</h3>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            onChange={this.handleChange}
-            className="form-control"
-            value={this.state.name}
-            onSubmit={this.handleSubmit}
-          />
-          <br />
-          <input type="submit" className="btn btn-success" value="ADD" />
-        </form>
-        <hr />
-        <ul className="list-group">
-          {this.props.contacts.map((contact, i) => this.listView(contact, i))}
-        </ul>
+      <div className="jumbotron">
+        <div className="container mt-4">
+          <h1>Contacts Application</h1>
+          <hr />
+          <h3>Add Name</h3>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              onChange={this.handleChange}
+              className="form-control"
+              value={this.state.name}
+              onSubmit={this.handleSubmit}
+            />
+            <br />
+            <input type="submit" className="btn btn-success" value="ADD" />
+          </form>
+          <hr />
+          <ul className="list-group">
+            {this.props.contacts.map((contact, i) => this.listView(contact, i))}
+          </ul>
+        </div>
       </div>
     );
   }
